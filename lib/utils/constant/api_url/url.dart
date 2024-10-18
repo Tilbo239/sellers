@@ -10,7 +10,8 @@ class ApiUrl {
   static const loginSocial = "$baseUrl/token_request_handler/";
   static const userInformation = "$baseUrl/user/account/";
   static const registration = "$baseUrl/user/";
-  static const countries = "$baseUrl/country";
+  static const countries = "$baseUrl/country";  
+  static const section = "$baseUrl/section";
   //Get url
   //Delete url
 }

@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:sellers/controllers/section_controller.dart';
 import 'package:sellers/models/countries.dart';
+import 'package:sellers/models/section.dart';
 import 'package:sellers/services/countries_service.dart';
+import 'package:sellers/services/section_service.dart';
 import 'package:sellers/utils/constant/countries.dart';
+import 'package:sellers/utils/validator_form/validator_form.dart';
 import 'package:sellers/utils/widget/build_profile_image.dart';
 import 'package:sellers/utils/widget/cover_pictire.dart';
 import 'package:sellers/utils/widget/custom_text.dart';
@@ -17,6 +21,7 @@ class CreateSeller extends StatelessWidget {
 
   final double height = Get.size.height / 3.5;
   final Map<String, dynamic>? selectedCountry;
+  final sectionController = Get.put<SectionController>(SectionController());
 
   final focusNode = FocusNode();
 
@@ -50,18 +55,20 @@ class CreateSeller extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 20.0),
               child: Form(
+                key: sectionController.sellerKey,
                 child: Column(
                   children: [
                     CustomTextFormField(
                       label: "Nom de la boutique",
                       hintText: "Entrer le nom de la boutique",
-                      // controller: registrationController.nameController,
-                      prefixIcon: Icon(
+                      controller: sectionController.nameShopController,
+                      prefixIcon: const Icon(
                         Icons.person_outline_sharp,
                       ),
                       obscureText: false,
                       keyboardType: TextInputType.name,
-                      // validator: (name) => ValidatorForm.validateName(name!),
+                      validator: (name) =>
+                          ValidatorForm.validateNameShop(name!),
                     ),
                     const SizedBox(
                       height: 15.0,
@@ -70,6 +77,8 @@ class CreateSeller extends StatelessWidget {
                       items: (f, cs) =>
                           countriesFromJson(CountriesJson.countries),
                       // CountriesService.requestUserInformation(),
+                      validator: (country) =>
+                          ValidatorForm.validateCountry(country),
                       suffixProps: const DropdownSuffixProps(
                         clearButtonProps: ClearButtonProps(isVisible: true),
                       ),
@@ -82,8 +91,9 @@ class CreateSeller extends StatelessWidget {
 
                         return Text(selectedItem.name);
                       },
-                      decoratorProps: DropDownDecoratorProps(
-                          decoration: InputDecoration(labelText: "Pays")),
+                      decoratorProps: const DropDownDecoratorProps(
+                        decoration: InputDecoration(labelText: "Pays"),
+                      ),
                       popupProps: PopupProps.dialog(
                         disableFilter:
                             true, //data will be filtered by the backend
@@ -128,13 +138,14 @@ class CreateSeller extends StatelessWidget {
                     CustomTextFormField(
                       label: "Ville",
                       hintText: "Entrer le nom de la ville",
-                      // controller: registrationController.nameController,
-                      prefixIcon: Icon(
+                      controller: sectionController.cityController,
+                      prefixIcon: const Icon(
                         Icons.location_city_outlined,
                       ),
                       obscureText: false,
                       keyboardType: TextInputType.name,
-                      // validator: (name) => ValidatorForm.validateName(name!),
+                      validator: (name) =>
+                          ValidatorForm.validateNameCity(name!),
                     ),
                     const SizedBox(
                       height: 15.0,
@@ -142,7 +153,7 @@ class CreateSeller extends StatelessWidget {
                     IntlPhoneField(
                       focusNode: focusNode,
                       initialCountryCode: 'TD',
-                      // controller: registrationController.phoneController,
+                      // controller: sectionController.phoneController,
                       autovalidateMode: AutovalidateMode.always,
                       disableLengthCheck: true,
                       pickerDialogStyle: PickerDialogStyle(
@@ -180,13 +191,14 @@ class CreateSeller extends StatelessWidget {
                       hintText: "Description de la boutique",
                       minLines: 1,
                       maxLines: 10,
-                      // controller: registrationController.nameController,
-                      prefixIcon: Icon(
+                      controller: sectionController.descriptionController,
+                      prefixIcon: const Icon(
                         Icons.description_outlined,
                       ),
                       obscureText: false,
                       keyboardType: TextInputType.multiline,
-                      // validator: (name) => ValidatorForm.validateName(name!),
+                      validator: (name) =>
+                          ValidatorForm.validateDescription(name!),
                     ),
                   ],
                 ),
@@ -231,11 +243,14 @@ class CreateSeller extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         child: ElevatedButton(
           onPressed: () async {
-            // List<Countries> countries =
-            //     await CountriesService.requestUserInformation();
+            if (ValidatorForm.checkLogin(sectionController.sellerKey)) {
+              print("object");
+            }
+            // SectionList sectionList = await SectionService.requestSection();
+            // var section = sectionList.sections;
 
-            // for (var country in countries) {
-            //   print(country.name);
+            // for (var section in section) {
+            //   print(section.mobileIcon);
             // }
           },
           child: Text("SUIVANT"),

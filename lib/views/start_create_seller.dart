@@ -79,7 +79,7 @@ class StartCreateSeller extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       Get.to(
-                        CreateSeller(),
+                        () => CreateSeller(),
                       );
                     },
                     child: const CustomText(text: "Créer ma boutique"),

@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'mossosouk-sellers.appspot.com',
     iosBundleId: 'com.mossosouk.sellers',
   );
+
 }

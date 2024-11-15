@@ -1,53 +1,119 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:sellers/controllers/login_controller.dart';
+import 'package:sellers/controllers/section_controller.dart';
+import 'package:sellers/utils/constant/key_storage.dart';
+import 'package:sellers/utils/routes/routes.dart';
+import 'package:sellers/utils/theme/custom_themes/text_theme.dart';
+import 'package:sellers/views/create_seller.dart';
+import 'package:sellers/views/home.dart';
+import 'package:sellers/views/login.dart';
+import 'package:sellers/views/register.dart';
+import 'package:sellers/views/select_section.dart';
+import 'package:sellers/views/splash_screen.dart';
+import 'package:sellers/views/start_create_seller.dart';
+import 'package:sellers/views/welcome.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'firebase_options.dart';
 
+ColorScheme kColorScheme = ColorScheme.fromSeed(
+  seedColor: const Color(0xff0099ff),
+);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  await GetStorage.init();
+  await GetStorage.init(KeyStorage.userInformationKey);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
+  final loginController = Get.put<LoginController>(LoginController());
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Sellers',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en'), Locale('fr')],
+      getPages: [
+        GetPage(name: Routes.welcome, page: () => Welcome()),
+        GetPage(name: Routes.login, page: () => LoginScreen()),
+        GetPage(name: Routes.register, page: () => RegisterScreen()),
+        GetPage(
+          name: Routes.startCreateSeller,
+          page: () => const StartCreateSeller(),
+        ),
+        GetPage(name: Routes.homeView, page: () => const Home()),
+        GetPage(name: Routes.createSeller, page: () => CreateSeller()),
+        GetPage(name: Routes.selectSection, page: () => SelectSection())
+      ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: false,
+          useMaterial3: true,
+          colorScheme: kColorScheme,
+          textTheme: TTextTeme.lightTextTheme,
+          //Input Decoration Theme
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.grey, // Default border color
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.grey, // Default border color
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+          //ElevatedButtonTheme
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xff0099ff),
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              textStyle: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+          progressIndicatorTheme: const ProgressIndicatorThemeData(
+            color: Color(0xff0099ff),
+          ),
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            titleTextStyle: TextStyle(fontSize: 15),
+            backgroundColor: Color(0xff0099ff),
+          ),
+          cardTheme: const CardTheme(
+            elevation: 1,
+            color: Color(
+              0xff0099ff,
+            ),
+          )),
+      home: Obx(
+        () {
+          return loginController.isLoading.value
+              ? const SplashScreen()
+              : Welcome();
+        },
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: const  Center(
-        child: Text("data")
-      ),);
   }
 }

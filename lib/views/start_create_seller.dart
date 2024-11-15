@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sellers/utils/constant/key_storage.dart';
+import 'package:sellers/utils/routes/routes.dart';
 import 'package:sellers/utils/widget/custom_text.dart';
 import 'package:sellers/views/create_seller.dart';
 import 'package:sellers/views/step_to_create_seller.dart';
@@ -78,9 +79,7 @@ class StartCreateSeller extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Get.to(
-                        () => CreateSeller(),
-                      );
+                      Get.toNamed(Routes.createSeller);
                     },
                     child: const CustomText(text: "Créer ma boutique"),
                   )

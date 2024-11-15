@@ -58,7 +58,7 @@ class ValidatorForm {
 
   static String? validateDescription(String name) {
     if (name.isEmpty) {
-      return "Entrez la description";
+      return "Entrez la description de la boutique";
     } else if (name.length < 10) {
       return "Description trop courte";
     } else {

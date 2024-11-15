@@ -51,7 +51,15 @@ dependencies:
   intl: ^0.19.0
   country_flags: ^3.0.0
   dropdown_search: ^6.0.1
+  choice: ^2.3.2
+
+  path: ^1.9.0
+  image_picker: ^1.1.2
+  # cached_network_image: ^3.4.1
   # flutter_localization: ^0.2.2
+
+  #I will implemente late
+  quickalert: ^1.1.0
 
   jwt_decoder: ^2.0.1
   get_storage: ^2.1.1

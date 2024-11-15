@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "537733470288",
     "project_id": "mossosouk-sellers",
-    "storage_bucket": "mossosouk-sellers.appspot.com"
+    "storage_bucket": "mossosouk-sellers.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +12,12 @@
           "package_name": "com.mossosouk.sellers"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "537733470288-2ica0tnrct304eikrbcq1fdkl7khshm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDYNCMCnCtk2NZ0f-mMRj6-q-bEPNi_y_I"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537733470288-2ica0tnrct304eikrbcq1fdkl7khshm4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "537733470288-q5509t9ljp26m4qlic4q987ivdg3ov31.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mossosouk.sellers"
+              }
+            }
+          ]
         }
       }
     }

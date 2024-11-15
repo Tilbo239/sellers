@@ -4,4 +4,6 @@ class Routes {
   static const register = "/register";
   static const startCreateSeller = '/startCreateSeller';
   static const homeView = "/home";
+  static const createSeller = "/createSeller";
+  static const selectSection = "/selectSection";
 }

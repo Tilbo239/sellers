@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:537733470288:android:e27ce69a08c9a3d4e29955',
     messagingSenderId: '537733470288',
     projectId: 'mossosouk-sellers',
-    storageBucket: 'mossosouk-sellers.appspot.com',
+    storageBucket: 'mossosouk-sellers.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -62,7 +62,8 @@ class DefaultFirebaseOptions {
     appId: '1:537733470288:ios:14e39091876943a9e29955',
     messagingSenderId: '537733470288',
     projectId: 'mossosouk-sellers',
-    storageBucket: 'mossosouk-sellers.appspot.com',
+    storageBucket: 'mossosouk-sellers.firebasestorage.app',
+    iosClientId: '537733470288-q5509t9ljp26m4qlic4q987ivdg3ov31.apps.googleusercontent.com',
     iosBundleId: 'com.mossosouk.sellers',
   );
 

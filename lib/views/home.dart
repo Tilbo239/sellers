@@ -115,225 +115,240 @@ class _HomeState extends State<Home> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.only(left: 10.0, right: 10, top: 5),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        // padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
-                        children: [
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          CustomTextFormField(
-                            label: 'Nom du produit',
-                            // controller: loginController.emailController,
-                            obscureText: false,
-                            // prefixIcon: const Icon(Icons.email_outlined),
-                            keyboardType: TextInputType.name,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            // validator: (email) =>
-                            // ValidatorForm.validateEmail(email!),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
+                          const EdgeInsets.only(left: 2.0, right: 2.0, top: 5),
+                      child: Card(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8.0, right: 8.0, top: 10.0, bottom: 10.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            // padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
                             children: [
-                              Expanded(
-                                child: CustomTextFormField(
-                                  label: 'Prix',
-                                  // controller: loginController.emailController,
-                                  obscureText: false,
-                                  // prefixIcon: const Icon(Icons.email_outlined),
-                                  keyboardType: TextInputType.name,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  // validator: (email) =>
-                                  // ValidatorForm.validateEmail(email!),
-                                ),
+                              // const SizedBox(
+                              //   height: 10,
+                              // ),
+                              CustomTextFormField(
+                                label: 'Nom du produit',
+                                // controller: loginController.emailController,
+                                obscureText: false,
+                                // prefixIcon: const Icon(Icons.email_outlined),
+                                keyboardType: TextInputType.name,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                // validator: (email) =>
+                                // ValidatorForm.validateEmail(email!),
                               ),
-                              const SizedBox(width: 5),
-                              Expanded(
-                                child: CustomTextFormField(
-                                  label: 'Quantité',
-                                  // controller: loginController.emailController,
-                                  obscureText: false,
-                                  // prefixIcon: const Icon(Icons.email_outlined),
-                                  keyboardType: TextInputType.name,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  // validator: (email) =>
-                                  // ValidatorForm.validateEmail(email!),
-                                ),
+                              const SizedBox(
+                                height: 15,
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          CustomTextFormField(
-                            label: 'Courte description',
-                            // controller: loginController.emailController,
-                            obscureText: false,
-                            // prefixIcon: const Icon(Icons.email_outlined),
-                            keyboardType: TextInputType.name,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            // validator: (email) =>
-                            // ValidatorForm.validateEmail(email!),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          DropdownSearch<Section>(
-                            key: _dropDownCustomBGKey1,
-                            autoValidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null) {
-                                return "Ajouter une categorie";
-                              }
-                              return null;
-                            },
-                            itemAsString: (Section? section) =>
-                                section!.sectionName,
-                            items: (f, cs) async {
-                              return sectionList!.sections;
-                            },
-                            compareFn: (item, selectedItem) =>
-                                item.id ==
-                                selectedItem.id, // Example comparison logic
-                            onChanged: (value) {
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                var section = sectionList!.sections.firstWhere(
-                                    (element) => element.id == value!.id);
-                                // setState(() {
-                                // Modifiez l'état en toute sécurité ici
-                                categories = [];
-                                categories = section.categories;
-                                // });
-                              });
-
-                              // print(section.categories);
-                            },
-                            popupProps: PopupProps.dialog(
-                              showSearchBox: false,
-                              dialogProps: DialogProps(
-                                clipBehavior: Clip.antiAlias,
-                                shape: OutlineInputBorder(
-                                  borderSide: const BorderSide(width: 0),
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: DropdownSearch<Category>(
-                                  key: _dropDownCustomBGKey2,
-                                  autoValidateMode: AutovalidateMode.always,
-                                  selectedItem: categories?[0],
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return "Ajouter une categorie";
-                                    }
-                                    return null;
-                                  },
-                                  itemAsString: (Category? category) =>
-                                      category!.categoryName,
-                                  items: (f, cs) {
-                                    return categories ?? [];
-                                  },
-                                  compareFn: (item, selectedItem) =>
-                                      item.id ==
-                                      selectedItem
-                                          .id, // Example comparison logic
-                                  onChanged: (value) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                      // setState(() {
-                                      subCategories = [];
-                                      var category = categories!.firstWhere(
-                                          (element) => element.id == value!.id);
-
-                                      subCategories = category.subCategories;
-
-                                      print(category.subCategories);
-                                      // });
-                                    });
-                                  },
-                                  popupProps: PopupProps.dialog(
-                                    showSearchBox: true,
-                                    dialogProps: DialogProps(
-                                      clipBehavior: Clip.antiAlias,
-                                      shape: OutlineInputBorder(
-                                        borderSide: const BorderSide(width: 0),
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomTextFormField(
+                                      label: 'Prix',
+                                      // controller: loginController.emailController,
+                                      obscureText: false,
+                                      // prefixIcon: const Icon(Icons.email_outlined),
+                                      keyboardType: TextInputType.name,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      // validator: (email) =>
+                                      // ValidatorForm.validateEmail(email!),
                                     ),
                                   ),
-                                ),
+                                  const SizedBox(width: 5),
+                                  Expanded(
+                                    child: CustomTextFormField(
+                                      label: 'Quantité',
+                                      // controller: loginController.emailController,
+                                      obscureText: false,
+                                      // prefixIcon: const Icon(Icons.email_outlined),
+                                      keyboardType: TextInputType.name,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      // validator: (email) =>
+                                      // ValidatorForm.validateEmail(email!),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 5),
-                              Expanded(
-                                child: DropdownSearch<SubCategory>(
-                                  key: _dropDownCustomBGKey3,
-                                  selectedItem: subCategories?[0],
-                                  autoValidateMode: AutovalidateMode.always,
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return "Ajouter une categorie";
-                                    }
-                                    return null;
-                                  },
-                                  itemAsString: (SubCategory? subCategories) =>
-                                      subCategories!.subCategoryName,
-                                  items: (f, cs) {
-                                    return subCategories ?? [];
-                                  },
-                                  compareFn: (item, selectedItem) =>
-                                      item.id ==
-                                      selectedItem
-                                          .id, // Example comparison logic
-                                  onChanged: (value) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                      // setState(() {
-                                      // subCategories = [];
-                                      // var category = categories!
-                                      //     .firstWhere((element) => element.id == value!.id);
-
-                                      // subCategories = category.subCategories;
-
-                                      // print(category.subCategories);
-                                      // });
-                                    });
-                                    // var section = sectionList.sections
-                                    // .firstWhere((element) => element.id == value!.id);
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              CustomTextFormField(
+                                label: 'Courte description',
+                                // controller: loginController.emailController,
+                                obscureText: false,
+                                // prefixIcon: const Icon(Icons.email_outlined),
+                                keyboardType: TextInputType.name,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                // validator: (email) =>
+                                // ValidatorForm.validateEmail(email!),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              DropdownSearch<Section>(
+                                key: _dropDownCustomBGKey1,
+                                autoValidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null) {
+                                    return "Ajouter une categorie";
+                                  }
+                                  return null;
+                                },
+                                itemAsString: (Section? section) =>
+                                    section!.sectionName,
+                                items: (f, cs) async {
+                                  return sectionList!.sections;
+                                },
+                                compareFn: (item, selectedItem) =>
+                                    item.id ==
+                                    selectedItem.id, // Example comparison logic
+                                onChanged: (value) {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    var section = sectionList!.sections
+                                        .firstWhere((element) =>
+                                            element.id == value!.id);
                                     // setState(() {
-                                    //   subCategories = [];
-                                    //   categories = section.categories;
+                                    // Modifiez l'état en toute sécurité ici
+                                    categories = [];
+                                    categories = section.categories;
                                     // });
-                                  },
-                                  popupProps: PopupProps.dialog(
-                                    showSearchBox: true,
-                                    dialogProps: DialogProps(
-                                      clipBehavior: Clip.antiAlias,
-                                      shape: OutlineInputBorder(
-                                        borderSide: BorderSide(width: 0),
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
+                                  });
+
+                                  // print(section.categories);
+                                },
+                                popupProps: PopupProps.dialog(
+                                  showSearchBox: false,
+                                  dialogProps: DialogProps(
+                                    clipBehavior: Clip.antiAlias,
+                                    shape: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: 0),
+                                      borderRadius: BorderRadius.circular(25),
                                     ),
                                   ),
                                 ),
                               ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: DropdownSearch<Category>(
+                                      key: _dropDownCustomBGKey2,
+                                      autoValidateMode: AutovalidateMode.always,
+                                      selectedItem: categories?[0],
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return "Ajouter une categorie";
+                                        }
+                                        return null;
+                                      },
+                                      itemAsString: (Category? category) =>
+                                          category!.categoryName,
+                                      items: (f, cs) {
+                                        return categories ?? [];
+                                      },
+                                      compareFn: (item, selectedItem) =>
+                                          item.id ==
+                                          selectedItem
+                                              .id, // Example comparison logic
+                                      onChanged: (value) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                          // setState(() {
+                                          subCategories = [];
+                                          var category = categories!.firstWhere(
+                                              (element) =>
+                                                  element.id == value!.id);
+
+                                          subCategories =
+                                              category.subCategories;
+
+                                          print(category.subCategories);
+                                          // });
+                                        });
+                                      },
+                                      popupProps: PopupProps.dialog(
+                                        showSearchBox: true,
+                                        dialogProps: DialogProps(
+                                          clipBehavior: Clip.antiAlias,
+                                          shape: OutlineInputBorder(
+                                            borderSide:
+                                                const BorderSide(width: 0),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Expanded(
+                                    child: DropdownSearch<SubCategory>(
+                                      key: _dropDownCustomBGKey3,
+                                      selectedItem: subCategories?[0],
+                                      autoValidateMode: AutovalidateMode.always,
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return "Ajouter une categorie";
+                                        }
+                                        return null;
+                                      },
+                                      itemAsString:
+                                          (SubCategory? subCategories) =>
+                                              subCategories!.subCategoryName,
+                                      items: (f, cs) {
+                                        return subCategories ?? [];
+                                      },
+                                      compareFn: (item, selectedItem) =>
+                                          item.id ==
+                                          selectedItem
+                                              .id, // Example comparison logic
+                                      onChanged: (value) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                          // setState(() {
+                                          // subCategories = [];
+                                          // var category = categories!
+                                          //     .firstWhere((element) => element.id == value!.id);
+
+                                          // subCategories = category.subCategories;
+
+                                          // print(category.subCategories);
+                                          // });
+                                        });
+                                        // var section = sectionList.sections
+                                        // .firstWhere((element) => element.id == value!.id);
+                                        // setState(() {
+                                        //   subCategories = [];
+                                        //   categories = section.categories;
+                                        // });
+                                      },
+                                      popupProps: PopupProps.dialog(
+                                        showSearchBox: true,
+                                        dialogProps: DialogProps(
+                                          clipBehavior: Clip.antiAlias,
+                                          shape: OutlineInputBorder(
+                                            borderSide: BorderSide(width: 0),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ],

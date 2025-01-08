@@ -13,7 +13,7 @@ class NewSellerService {
     required String description,
     required String shopPhone,
     required int country,
-    required List sections,
+    required List<int> sections,
     required String city,
   }) async {
     Map<String, dynamic> body = {
@@ -32,7 +32,6 @@ class NewSellerService {
     print("${response.statusCode}");
 
     if (response.statusCode == 201) {
-      print("------------->OK");
       return newSellerFromJson(response.body);
     } else {
       throw GeneralException();

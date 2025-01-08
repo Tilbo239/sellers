@@ -8,20 +8,13 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:quickalert/quickalert.dart';
+import 'package:sellers/controllers/new_seller_controller.dart';
 import 'package:sellers/controllers/section_controller.dart';
 import 'package:sellers/models/countries.dart';
-import 'package:sellers/models/section.dart';
-import 'package:sellers/models/seller_new.dart';
-import 'package:sellers/services/countries_service.dart';
-import 'package:sellers/services/new_seller_service.dart';
-import 'package:sellers/services/section_service.dart';
 import 'package:sellers/utils/constant/countries.dart';
-import 'package:sellers/utils/routes/routes.dart';
 import 'package:sellers/utils/validator_form/validator_form.dart';
 import 'package:sellers/utils/widget/build_profile_image.dart';
 import 'package:sellers/utils/widget/cover_pictire.dart';
-import 'package:sellers/utils/widget/custom_text.dart';
 import 'package:sellers/utils/widget/custom_text_form_field.dart';
 import 'package:sellers/utils/widget/snackbar_widget.dart';
 
@@ -33,9 +26,13 @@ class CreateSeller extends StatelessWidget {
   final Map<String, dynamic>? selectedCountry;
   final sectionController = Get.put<SectionController>(SectionController());
 
+  final newSellerController = Get.put<NewSellerController>(
+    NewSellerController(),
+  );
+
   final focusNode = FocusNode();
 
-  late String? nameShop, phoneNumber, city, description;
+  late String? phoneNumber, city, description;
   late int idCountry;
 
   @override
@@ -70,7 +67,7 @@ class CreateSeller extends StatelessWidget {
 
                           final imageTemporary = File(xFileCoverPicture!.path);
                           coverPicture.value = imageTemporary;
-                        } on PlatformException catch (e) {}
+                        } on PlatformException {}
                       },
                     ),
                     Positioned(
@@ -97,7 +94,7 @@ class CreateSeller extends StatelessWidget {
                             final imageTemporary =
                                 File(xFileImageProfile!.path);
                             imageProfile.value = imageTemporary;
-                          } on PlatformException catch (e) {}
+                          } on PlatformException {}
                         },
                       ),
                     ),
@@ -301,35 +298,28 @@ class CreateSeller extends StatelessWidget {
           shadowColor: Colors.transparent,
           child: ElevatedButton(
               onPressed: () async {
-                // NewSeller newSeller = await NewSellerService.requestNewSeller(
+                // PostImageService.postProfileImage(
+                //   sellerID: 69,
                 //   token:
-                //       "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MzE2NzE2NDAsImV4cCI6MTczMjI3NjQ0MCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidGVzdDIwMjdAbW9zc29zb3VrLmNvbSJ9.JWuPr555LSiBRdJId5qlE9rhe0B721A0hJInEhAUaVCO2m7nMVLifcmFte7ISUVpwlcskn4aWjxqS3zaPpBoT9Vud7UrOI_wUq2PvSUUrJam7pxHdOriYpGCzDc2mIS5je5hz-C2uhfXAlRPCQMGmNQKFazHDbVcSw-LvX3NQ-x5iKa7GO05xNzAzjHk_MU6wu-DIoz4YB_tNxoTriDH5zyi82QRPoiPyQnaQnk6W9iJIO5JwmbOlt5a5Wnc81hK0C5O9EWj1OnX4E1IfLsCJwvAwic0FYiEYTzWkU6UKp0GI8ns8lWQg3LlMT-g2EkByyXJqVfBeeeB8QUXVOrKMw",
-                //   shopName: "Black Shop",
-                //   description: "all black dress code",
-                //   shopPhone: "+2357485777485",
-                //   country: 215,
-                //   sections: [2, 5],
-                //   city: "Ndjamena",
+                //       "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MzIwMTYwNjcsImV4cCI6MTczMjYyMDg2Nywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidGVzdDIwMjdAbW9zc29zb3VrLmNvbSJ9.PMt7k8dBS_MyBxmbVuv5xy7hfpsC36FadnRwVOLdsmnRhu-y6Qdzl5Le6y8UBOI93Cn9qtRwCbpt1EqrdJYRl1lSC-TKmnsUj12vBNuh9rUsalhxOlu6JJh6RjOOedhKqzgrTUfFJt0aDvRX1ZGpygGTRyVe99spdSNqHfTYW_5qddQTf-Od62oscbodClQDNVf76H24ZsjJSvuaBoeby7tkk5Zg89lhFMMQY6uM9Jo1qoKuUIgNd33PnRZeYwZqCTY1Rets3S289Vpyp-kptFcxutc0aD3FQtuhAxoJt-1z-1MqIgY4HMe8CCV6FoqoRhkuPYLNS3ILB1tOZA0nXA",
+                //   image: xFileCoverPicture,
+                //   url: ApiUrl.coverShopPicture,
+                //   field: "cover_picture",
                 // );
 
-                // print(newSeller.section[0].sectionName);
                 if (xFileCoverPicture == null || xFileImageProfile == null) {
                   SnackBarWidgets.snackBar(
                     "Erreur",
-                    "insérer la photo de profil et de couverture",
+                    "insérer une photo de profil et de couverture",
                   );
                   return;
                 }
                 if (ValidatorForm.checkLogin(sectionController.sellerKey)) {
-                  // nameShop = sectionController.nameShopController.text;
-                  // description = sectionController.descriptionController.text;
-                  // city = sectionController.cityController.text;
-                  // print("$nameShop $description $city $idCountry $phoneNumber");
-                  // sectionController.requestSection();
-
                   sectionController.requestSection(
                     xFileCoverPicture: xFileCoverPicture,
                     xFileImageProfile: xFileImageProfile,
+                    idCountry: idCountry,
+                    phoneNumber: phoneNumber!,
                   );
                 }
               },

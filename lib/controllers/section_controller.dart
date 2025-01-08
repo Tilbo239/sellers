@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sellers/models/login_response_model.dart';
 import 'package:sellers/models/section.dart';
 import 'package:sellers/services/section_service.dart';
 import 'package:sellers/utils/constant/key_storage.dart';
@@ -41,8 +38,12 @@ class SectionController extends GetxController {
     descriptionController.dispose();
   }
 
-  void requestSection(
-      {XFile? xFileImageProfile, XFile? xFileCoverPicture}) async {
+  void requestSection({
+    XFile? xFileImageProfile,
+    XFile? xFileCoverPicture,
+    required int idCountry,
+    required String phoneNumber,
+  }) async {
     isLoading(true);
     try {
       sectionList = await SectionService.requestSection();
@@ -50,8 +51,16 @@ class SectionController extends GetxController {
         KeyStorage.sectionList,
         sectionListToJson(sectionList!),
       );
-      log(xFileImageProfile.toString());
-      Get.toNamed(Routes.selectSection);
+      // log(xFileImageProfile.toString());
+      Get.toNamed(Routes.selectSection, arguments: {
+        "nameShop": nameShopController.text,
+        "city": cityController.text,
+        "description": descriptionController.text,
+        "phone": phoneNumber,
+        "xFileImageProfile": xFileImageProfile,
+        "xFileCoverPicture": xFileCoverPicture,
+        "idCountry": idCountry,
+      });
     } catch (e) {
       // print(e);
     } finally {

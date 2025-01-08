@@ -2,12 +2,14 @@
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sellers/controllers/new_seller_controller.dart';
 import 'package:sellers/controllers/section_controller.dart';
 import 'package:sellers/models/section.dart';
 import 'package:sellers/utils/widget/custom_text.dart';
+import 'package:sellers/utils/widget/snackbar_widget.dart';
 
 class SelectSection extends StatefulWidget {
-  SelectSection({super.key});
+  const SelectSection({super.key});
 
   @override
   State<SelectSection> createState() => _SelectSectionState();
@@ -18,111 +20,131 @@ class _SelectSectionState extends State<SelectSection> {
   bool isSeleted = false;
 
   final sectionController = Get.find<SectionController>();
+  final newSellerController =
+      Get.put<NewSellerController>(NewSellerController());
 
-  List<Section> multipleSelected = [];
+  List<int> multipleSelected = [];
 
-  void setMultipleSelected(List<Section> value) {
+  void setMultipleSelected(List<int> value) {
+    print(value);
     setState(() => multipleSelected = value);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Choisir les catégories"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // spacing: 10,
-            children: [
-              const SizedBox(
-                height: 40,
-              ),
-              Card(
-                child: Container(
-                  padding: const EdgeInsets.only(
-                    top: 20,
-                    left: 8,
-                    right: 8,
-                    bottom: 20,
-                  ),
-                  child: CustomText(
-                    text: "Selectionnez la(les) catégorie(s) de produit",
-                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                          fontSize: 22,
-                          color: Colors.white,
-                        ),
+    // print(
+    //   "${Get.arguments["nameShop"]} ${Get.arguments["description"]} ${Get.arguments["phone"]} ----->${Get.arguments["city"]} ${Get.arguments["idCountry"]} ${Get.arguments["xFileImageProfile"]} ${Get.arguments["xFileCoverPicture"]}",
+    // );
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          title: const Text("Choisir les catégories"),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // spacing: 10,
+              children: [
+                const SizedBox(
+                  height: 40,
+                ),
+                Card(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      left: 8,
+                      right: 8,
+                      bottom: 20,
+                    ),
+                    child: CustomText(
+                      text: "Selectionnez la(les) catégorie(s) de produit",
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                            fontSize: 22,
+                            color: Colors.white,
+                          ),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              InlineChoice<Section>(
-                multiple: true,
-                clearable: true,
-                value: multipleSelected,
-                onChanged: setMultipleSelected,
-                itemCount: sectionController.sectionList!.sections.length,
-                itemBuilder: (selection, i) {
-                  return ChoiceChip(
-                    selected: selection
-                        .selected(sectionController.sectionList!.sections[i]),
-                    onSelected: selection.onSelected(
-                      sectionController.sectionList!.sections[i],
-                    ),
-                    label: Text(
-                      sectionController.sectionList!.sections[i].sectionName,
-                    ),
-                    elevation: 2,
-                    checkmarkColor: const Color(
-                      0xff0099ff,
-                    ),
-                    side: const BorderSide(
-                      color: Color(
+                const SizedBox(
+                  height: 15,
+                ),
+                InlineChoice<int>(
+                  multiple: true,
+                  clearable: true,
+                  value: multipleSelected,
+                  onChanged: setMultipleSelected,
+                  itemCount: sectionController.sectionList!.sections.length,
+                  itemBuilder: (selection, i) {
+                    return ChoiceChip(
+                      selected: selection.selected(
+                          sectionController.sectionList!.sections[i].id),
+                      onSelected: selection.onSelected(
+                        sectionController.sectionList!.sections[i].id,
+                      ),
+                      label: Text(
+                        sectionController.sectionList!.sections[i].sectionName,
+                      ),
+                      elevation: 2,
+                      checkmarkColor: const Color(
                         0xff0099ff,
                       ),
+                      side: const BorderSide(
+                        color: Color(
+                          0xff0099ff,
+                        ),
+                      ),
+                      selectedColor: Colors.white,
+                    );
+                  },
+                  listBuilder: ChoiceList.createWrapped(
+                    spacing: 5,
+                    runSpacing: 3,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                      vertical: 5,
                     ),
-                    selectedColor: Colors.white,
-                  );
-                },
-                listBuilder: ChoiceList.createWrapped(
-                  spacing: 5,
-                  runSpacing: 3,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                    vertical: 5,
                   ),
-                ),
-              )
-            ]),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        notchMargin: 0,
-        elevation: 0,
-        shadowColor: Colors.transparent,
-        child: ElevatedButton(
-            onPressed: () async {
-              // }
+                )
+              ]),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          notchMargin: 0,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          child: ElevatedButton(
+              onPressed: () async {
+                if (multipleSelected.isEmpty) {
+                  SnackBarWidgets.snackBar(
+                    "Erreur",
+                    "Veuillez selectionner au moins une catégorie",
+                  );
+                  return;
+                }
 
-              //Get serction list
-            },
-            child:
-                // Obx(() {
-                // return sectionController.isLoading.value
-                //     ? const Padding(
-                //         padding: EdgeInsets.symmetric(vertical: 5),
-                //         child: CircularProgressIndicator(
-                //           valueColor: AlwaysStoppedAnimation<Color>(
-                //             Colors.white,
-                //           ),
-                //         ),
-                //       )
-                //     :
-                const Text('Enregistrer ma boutique')
-            // })
-            ),
+                newSellerController.requestNewSeller(
+                  shopName: Get.arguments["nameShop"],
+                  description: Get.arguments["description"],
+                  shopPhone: Get.arguments["phone"],
+                  country: Get.arguments["idCountry"],
+                  sections: multipleSelected,
+                  city: Get.arguments["city"],
+                  xFileImageProfile: Get.arguments["xFileImageProfile"],
+                  xFileCoverPicture: Get.arguments["xFileCoverPicture"],
+                  // dataSection: sectionController.sectionList!.sections,
+                  context: context,
+                );
+              },
+              child: newSellerController.isLoading.value
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.white,
+                        ),
+                      ),
+                    )
+                  : const Text('Enregistrer ma boutique')),
+        ),
       ),
     );
   }

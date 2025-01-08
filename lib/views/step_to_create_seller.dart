@@ -9,7 +9,7 @@ class StepToCreateSeller extends StatelessWidget {
         title: const Text('Vendre en ligne sur Mossosouk'),
       ),
       body:const Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

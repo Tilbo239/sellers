@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:sellers/utils/routes/routes.dart';
 import 'package:sellers/utils/widget/elevatef_button_widget.dart';
 
 class Welcome extends StatelessWidget {
-   Welcome({super.key});
-
-  
+  const Welcome({super.key});
 
   @override
   Widget build(BuildContext context) {

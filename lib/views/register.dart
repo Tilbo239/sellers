@@ -4,7 +4,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sellers/controllers/registration_controller.dart';
-import 'package:sellers/services/registration_service.dart';
 import 'package:sellers/utils/routes/routes.dart';
 import 'package:sellers/utils/validator_form/validator_form.dart';
 import 'package:sellers/utils/widget/custom_scaffold.dart';

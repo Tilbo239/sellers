@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sellers/models/login_response_model.dart';
+import 'package:sellers/models/seller.dart';
 import 'package:sellers/models/user_information.dart';
+import 'package:sellers/services/get_seller_service.dart';
 import 'package:sellers/services/login_service.dart';
 import 'package:sellers/services/user_information_service.dart';
 import 'package:sellers/utils/constant/key_storage.dart';
@@ -89,7 +91,15 @@ class LoginController extends GetxController {
       isSeller(userInformation
           .user.sellers.isNotEmpty); //if false the user is not seller yet
       if ((isSeller.value == true) && (hasExpired.value == false)) {
-        Get.offAllNamed(Routes.homeView);
+        // print(userInformation.user.sellers[0].id);
+        SellerModel sellerModel = await GetSellerService.requestSeller(
+          id: userInformation.user.sellers[0].id,
+        );
+        await Get.offAllNamed(Routes.homeView, arguments: {
+          "seller": sellerModel,
+          "userInformation": userInformation,
+          "isNewSeller": false
+        });
       } else if (!hasExpired.value && isSeller.value == false) {
         Get.offAllNamed(Routes.startCreateSeller);
       }

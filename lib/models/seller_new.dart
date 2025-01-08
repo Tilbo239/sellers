@@ -25,7 +25,7 @@ class NewSeller {
     dynamic address;
     int followers;
     String description;
-    List<Section> section;
+    List<SectionNew> section;
     dynamic totalRate;
     String shopPhone;
     bool isCertified;
@@ -74,7 +74,7 @@ class NewSeller {
         address: json["address"],
         followers: json["followers"],
         description: json["description"],
-        section: List<Section>.from(json["section"].map((x) => Section.fromJson(x))),
+        section: List<SectionNew>.from(json["section"].map((x) => SectionNew.fromJson(x))),
         totalRate: json["totalRate"],
         shopPhone: json["shopPhone"],
         isCertified: json["isCertified"],
@@ -124,16 +124,16 @@ class Country {
     };
 }
 
-class Section {
+class SectionNew {
     int id;
     String sectionName;
 
-    Section({
+    SectionNew({
         required this.id,
         required this.sectionName,
     });
 
-    factory Section.fromJson(Map<String, dynamic> json) => Section(
+    factory SectionNew.fromJson(Map<String, dynamic> json) => SectionNew(
         id: json["id"],
         sectionName: json["sectionName"],
     );

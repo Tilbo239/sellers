@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sellers/controllers/login_controller.dart';
-import 'package:sellers/controllers/section_controller.dart';
 import 'package:sellers/utils/constant/key_storage.dart';
 import 'package:sellers/utils/routes/routes.dart';
 import 'package:sellers/utils/theme/custom_themes/text_theme.dart';

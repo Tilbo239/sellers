@@ -16,7 +16,7 @@ class StartCreateSeller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(235, 200, 219, 230),
+        backgroundColor: const Color.fromARGB(235, 200, 219, 230),
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -58,7 +58,7 @@ class StartCreateSeller extends StatelessWidget {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                      Get.to(StepToCreateSeller());
+                      Get.to(const StepToCreateSeller());
                     },
                     label: CustomText(
                       text: "Lire les étapes",

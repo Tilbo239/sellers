@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(onPressed: () async {
-                          if (ValidatorForm.checkLogin(
+                          if (ValidatorForm.isValidated(
                               loginController.loginKey)) {
                             final String email =
                                 loginController.emailController.text.trim();

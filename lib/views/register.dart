@@ -243,7 +243,7 @@ class RegisterScreen extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                             onPressed: () async {
-                              if (ValidatorForm.checkLogin(
+                              if (ValidatorForm.isValidated(
                                   registrationController.registrationKey)) {
                                 if (!agreePersonalData.value) {
                                   SnackBarWidgets.snackBar(

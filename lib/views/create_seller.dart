@@ -314,7 +314,7 @@ class CreateSeller extends StatelessWidget {
                   );
                   return;
                 }
-                if (ValidatorForm.checkLogin(sectionController.sellerKey)) {
+                if (ValidatorForm.isValidated(sectionController.sellerKey)) {
                   sectionController.requestSection(
                     xFileCoverPicture: xFileCoverPicture,
                     xFileImageProfile: xFileImageProfile,

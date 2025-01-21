@@ -17,6 +17,7 @@ class CustomTextFormField extends StatelessWidget {
     this.initialValue,
     this.minLines,
     this.maxLines,
+    this.textInputAction,
     // this.onSaved
   });
 
@@ -33,7 +34,8 @@ class CustomTextFormField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final String? initialValue;
   final int? minLines;
-  int? maxLines=1;
+  int? maxLines = 1;
+  TextInputAction? textInputAction;
 
   // final void Function(String?)? onSaved;
 
@@ -52,6 +54,7 @@ class CustomTextFormField extends StatelessWidget {
       onTap: onTap,
       // onSaved: onSaved,
       readOnly: readOnly ?? false,
+      textInputAction: textInputAction,
       decoration: InputDecoration(
         label: Text(label),
         hintText: hintText,
